@@ -1,7 +1,6 @@
 import Modal from "./components/Modal";
 
 function App() {
-  // 주석을 추가했을 경우
   return (
     <>
       <div>
