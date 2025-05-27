@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# 브랜치 변경인지 확인 ($3이 1이면 브랜치 변경)
+if [ "$3" = "1" ]; then
+  echo "🔄 Branch switched! Running post-checkout tasks..."
+  
+  # package.json이나 pnpm-lock.yaml이 변경되었는지 확인
+  if git diff --name-only HEAD@{1} HEAD | grep -E "(package\.json|pnpm-lock\.yaml)" > /dev/null; then
+    echo "📦 Dependencies changed, installing..."
+    pnpm install
+  fi
+  
+  # node_modules가 없으면 설치
+  if [ ! -d "node_modules" ]; then
+    echo "📦 Installing dependencies..."
+    pnpm install
+  fi
+  
+  echo "✅ Post-checkout tasks completed!"
+fi 

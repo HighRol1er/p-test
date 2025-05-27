@@ -1,0 +1,31 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🎉 Post-merge tasks starting..."
+
+# 현재 브랜치 확인
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+# main/master 브랜치라면 추가 작업 수행
+if [ "$current_branch" = "main" ] || [ "$current_branch" = "master" ]; then
+  echo "🌟 Merged to main branch! Running additional checks..."
+  
+  # 의존성 업데이트 확인
+  if git diff --name-only HEAD@{1} HEAD | grep -E "(package\.json|pnpm-lock\.yaml)" > /dev/null; then
+    echo "📦 Dependencies updated, installing..."
+    pnpm install
+  fi
+  
+  # 빌드 및 테스트 재실행
+  echo "🔨 Running final build check..."
+  pnpm build
+  
+  echo "🧪 Running final test suite..."
+  pnpm test
+  
+  echo "✅ Main branch is ready for deployment!"
+else
+  echo "📝 Merged to feature branch: $current_branch"
+fi
+
+echo "✅ Post-merge tasks completed!" 

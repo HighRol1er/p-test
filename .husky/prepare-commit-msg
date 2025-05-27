@@ -1,0 +1,38 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# 커밋 타입이 지정되지 않았고, 메시지가 비어있다면 템플릿 제공
+if [ -z "$(cat "$1")" ]; then
+  # 현재 브랜치명 가져오기
+  branch_name=$(git rev-parse --abbrev-ref HEAD)
+  
+  # 브랜치명에서 커밋 타입 추론
+  if echo "$branch_name" | grep -q "^feat/"; then
+    commit_type="feat"
+  elif echo "$branch_name" | grep -q "^fix/"; then
+    commit_type="fix"
+  elif echo "$branch_name" | grep -q "^docs/"; then
+    commit_type="docs"
+  elif echo "$branch_name" | grep -q "^refactor/"; then
+    commit_type="refactor"
+  else
+    commit_type="feat"
+  fi
+  
+  # 템플릿 작성
+  cat > "$1" << EOF
+$commit_type: 
+
+# 📝 Commit message guidelines:
+# feat: new feature
+# fix: bug fix
+# docs: documentation changes
+# style: formatting, missing semi colons, etc
+# refactor: code change that neither fixes a bug nor adds a feature
+# test: adding missing tests
+# chore: maintain and config changes
+#
+# 💡 Current branch: $branch_name
+# 🎯 Keep it short (50 chars max for title)
+EOF
+fi 
