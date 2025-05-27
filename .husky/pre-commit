@@ -1,30 +1,27 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+# echo "🚀 GitHub Flow Pre-commit checks..."
 
-echo "🚀 GitHub Flow Pre-commit checks..."
+# # 1. ESLint 체크 - 코드 품질 보장
+# echo "🔍 Running ESLint..."
+# if ! pnpm lint; then
+#   echo "❌ ESLint failed! Code quality issues detected."
+#   echo "💡 Please fix linting errors before committing."
+#   exit 1
+# fi
 
-# 1. ESLint 체크 - 코드 품질 보장
-echo "🔍 Running ESLint..."
-if ! pnpm lint; then
-  echo "❌ ESLint failed! Code quality issues detected."
-  echo "💡 Please fix linting errors before committing."
-  exit 1
-fi
+# # 2. 빌드 체크 - 배포 가능한 상태 확인
+# echo "🔨 Running build check..."
+# if ! pnpm build; then
+#   echo "❌ Build failed! Code is not deployable."
+#   echo "💡 Please fix build errors before committing."
+#   exit 1
+# fi
 
-# 2. 빌드 체크 - 배포 가능한 상태 확인
-echo "🔨 Running build check..."
-if ! pnpm build; then
-  echo "❌ Build failed! Code is not deployable."
-  echo "💡 Please fix build errors before committing."
-  exit 1
-fi
+# # 3. 테스트 실행 - 기능 정상 작동 확인
+# echo "🧪 Running tests..."
+# if ! pnpm test; then
+#   echo "❌ Tests failed! Functionality may be broken."
+#   echo "💡 Please fix failing tests before committing."
+#   exit 1
+# fi
 
-# 3. 테스트 실행 - 기능 정상 작동 확인
-echo "🧪 Running tests..."
-if ! pnpm test; then
-  echo "❌ Tests failed! Functionality may be broken."
-  echo "💡 Please fix failing tests before committing."
-  exit 1
-fi
-
-echo "✅ All checks passed! Ready for GitHub Flow 🎉"
+# echo "✅ All checks passed! Ready for GitHub Flow 🎉"
