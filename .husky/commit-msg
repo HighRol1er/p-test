@@ -1,12 +1,9 @@
-# 커밋 메시지 파일 경로
 commit_regex='^(feat|fix|refactor|design|comment|test|chore|reanme|remove)(\(.+\))?: .{1,}'
 
-# 커밋 메시지 읽기
 commit_message=$(cat "$1")
 
 echo "🔍 Checking commit message format..."
 
-# 커밋 메시지 검증
 if ! echo "$commit_message" | grep -qE "$commit_regex"; then
   echo "❌ Invalid commit message format!"
   echo ""
